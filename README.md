@@ -17,7 +17,6 @@ to serve as a vehicle for co-design by allowing others to extend
 and/or reimplement it as needed to test performance of new 
 architectures, programming models, etc.
 
-The current version of CoSP2 is available from:
-https://github.com/exmatex/CoSP2
+Copyright and license
 
-To view the generated Doxygen documentation for CoMD, please visit exmatex.github.io/CoSP2/doxygen-mpi/index.html.
+Los Alamos National Security, LLC (LANS) owns the copyright to CoSP2, which it identifies internally as LA-CC-2012-065 (ExMatEx: Scale-Bridging Materials Evaluation and Test Suite, Version 1). The license is BSD-sh with a "modifications must be indicated" clause. See LICENSE.md for the full text.
