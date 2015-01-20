@@ -79,8 +79,6 @@ void sparseX2(real_t* trX, real_t* trX2, struct SparseMatrixSt* xmatrix, struct 
   *trX = traceX;
   *trX2 = traceX2;
 
-  if (printRank() && debug == 1) 
-    printf("Local: trx = %e trx2 = %e\n", traceX, traceX2);
 }
 
 // \details

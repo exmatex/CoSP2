@@ -52,6 +52,9 @@ void sp2Loop(struct SparseMatrixSt* xmatrix, struct DomainSt* domain)
   int iter = 0;
   int breakLoop = 0;
 
+  if (printRank() && debug == 1)
+    printf("\nSP2Loop:\n");
+
   while ( breakLoop == 0 && iter < 100 )
   {
     trX = ZERO;
@@ -83,7 +86,7 @@ void sp2Loop(struct SparseMatrixSt* xmatrix, struct DomainSt* domain)
 #endif
 
     if (printRank() && debug == 1) 
-      printf("trX = %e  trX2 = %e\n", trX, trX2);
+      printf("iter = %d  trX = %e  trX2 = %e\n", iter, trX, trX2);
  
     tr2XX2 = TWO*trX - trX2;
     trXOLD = trX;
@@ -191,12 +194,13 @@ void reportResults(int iter, struct SparseMatrixSt* xmatrix, struct SparseMatrix
 
   if (printRank())
   {
+    printf("\nResults:\n");
     printf("X2 Sparsity CCN = %d, fraction = %e avg = %g, max = %d\n", sumIIC, 
       (real_t)sumIIC/(real_t)(hsize*hsize), (real_t)sumIIC/(real_t)hsize, maxIIC);
 
     printf("D Sparsity AAN = %d, fraction = %e avg = %g, max = %d\n", sumIIA, 
       (real_t)sumIIA/(real_t)(hsize*hsize), (real_t)sumIIA/(real_t)hsize, maxIIA);
 
-    printf("IT = %d\n", iter);
+    printf("Number of iterations = %d\n", iter);
   }
 }

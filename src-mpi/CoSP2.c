@@ -75,9 +75,6 @@ SparseMatrix* initSimulation(Command cmd)
     readMTX(cmd.hmatName, spH);
     stopTimer(readhTimer);
   
-    // Write out sparsity pattern if requested
-    if (printRank() && cmd.dout == 1)
-      writeSparsePattern("spattern.dat", spH, cmd.heps);
   }
 
   else
@@ -88,9 +85,6 @@ SparseMatrix* initSimulation(Command cmd)
     //Banded Hamiltonian is generated
     spH = generateHMatrix(hDim, M, cmd.amp, cmd.alpha);
 
-    // Print out sparsity pattern
-    if (printRank() && cmd.dout == 1)
-      writeSparsePattern("spattern.dat", spH, cmd.heps);
   }
 
   return spH;

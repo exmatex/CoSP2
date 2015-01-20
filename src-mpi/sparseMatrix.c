@@ -111,7 +111,7 @@ void sparsity(struct SparseMatrixSt* spmatrix)
 
   if (printRank())
   {
-    printf("Initial sparsity = %d, fraction = %e, Avg per row = %f\n", hValCount,
+    printf("\nSparsity:\nInitial sparsity = %d, fraction = %e, Avg per row = %f\n", hValCount,
        (real_t)hValCount/(real_t)(hsize*hsize), (real_t)hValCount/(real_t)hsize);
     int maxRowCount = 0;
     for (int i = 0; i < hsize; i++)
@@ -176,7 +176,7 @@ void gershgorin(struct SparseMatrixSt* spmatrix, struct DomainSt* domain)
   maxMinusMin = eMax-eMin;
 
   if (printRank()) 
-    printf("Gershgorin: New  eMax, eMin = %e, %e\n", eMax, eMin); // GERSGORIN BOUNDS;
+    printf("\nGershgorin:\nNew  eMax, eMin = %e, %e\n", eMax, eMin); // GERSGORIN BOUNDS;
 
   spmatrix->maxEval = eMax;
   spmatrix->minEval = eMin;

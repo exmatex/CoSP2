@@ -1,5 +1,5 @@
 This is CoSP2 version 1.0
-========================
+=========================
 
 CoSP2 is a reference implementation of typical linear algebra
 algorithms and workloads for a quantum molecular dynamics (QMD)
