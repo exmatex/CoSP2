@@ -40,6 +40,31 @@ SparseMatrix* initSparseMatrix(int hsize, int msize)
   // iia holds the number of non-zeroes in each row
   spmatrix->iia = (int*)malloc(hsize*sizeof(int));
 
+#ifdef CONTIG_MATRIX
+  spmatrix->jjcontig = (int*)malloc(hsize*msize*sizeof(int));
+  spmatrix->jja = (int**)malloc(hsize*sizeof(int*));
+  #pragma omp parallel for
+  for (int i = 0; i < hsize; i++)
+  {
+    spmatrix->jja[i] = &(spmatrix->jjcontig[i*msize]);
+  }
+
+  // Zero counts of non-zeroes per row and indices
+  memset(spmatrix->jjcontig, 0, hsize*msize*sizeof(int));
+  
+  spmatrix->valcontig = (real_t*)malloc(hsize*msize*sizeof(real_t));
+  spmatrix->val = (real_t**)malloc(hsize*sizeof(real_t*));
+  #pragma omp parallel for
+  for (int i = 0; i < hsize; i++)
+  {
+    spmatrix->val[i] = &(spmatrix->valcontig[i*msize]);
+  }
+  
+  // Zero non-zero values
+  memset(spmatrix->valcontig, ZERO, hsize*msize*sizeof(real_t));
+ 
+#else
+
   // jja contains the column index for each non-zero value
   spmatrix->jja = (int**)malloc(hsize*sizeof(int*));
   for (int i = 0; i < hsize; i++)
@@ -53,6 +78,7 @@ SparseMatrix* initSparseMatrix(int hsize, int msize)
   {
     spmatrix->val[i] = (real_t*)malloc(msize*sizeof(real_t));
   }
+#endif
 
   // Zero counts of non-zeroes per row
   memset(spmatrix->iia, 0, hsize*sizeof(int));
@@ -76,7 +102,13 @@ void destroySparseMatrix(struct SparseMatrixSt* spmatrix)
 
   free(spmatrix->iia);
 
+#ifdef CONTIG_MATRIX
+  free(spmatrix->jjcontig);
+  free(spmatrix->jja);
 
+  free(spmatrix->valcontig);
+  free(spmatrix->val);
+#else
   for (int i = 0; i < hsize; i++)
   {
     //free(spmatrix->jja[i]);
@@ -88,8 +120,15 @@ void destroySparseMatrix(struct SparseMatrixSt* spmatrix)
     free(spmatrix->val[i]);
   }
   free(spmatrix->val);
+#endif
 
-  free(spmatrix);
+  spmatrix->hsize = 0;
+  spmatrix->msize = 0;
+  spmatrix->bandwidth = 0;
+
+  spmatrix->minEval = ZERO;
+  spmatrix->maxEval = ZERO;
+  spmatrix->maxMinusMin = ZERO;
 }
 
 /// \details
